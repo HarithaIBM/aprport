@@ -1,0 +1,13 @@
+diff --git a/poll/unix/epoll.c b/poll/unix/epoll.c
+index 77caa67..666efc9 100644
+--- a/poll/unix/epoll.c
++++ b/poll/unix/epoll.c
+@@ -23,7 +23,7 @@
+ #include "apr_arch_poll_private.h"
+ #include "apr_arch_inherit.h"
+ 
+-#if defined(HAVE_EPOLL)
++#if defined(HAVE_EPOLL) && ! defined (__MVS__)
+ 
+ static unsigned get_epoll_event(apr_int16_t event)
+ {
