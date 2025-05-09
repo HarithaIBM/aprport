@@ -1,0 +1,22 @@
+diff --git a/poll/unix/pollset.c b/poll/unix/pollset.c
+index 89b0387..0798442 100644
+--- a/poll/unix/pollset.c
++++ b/poll/unix/pollset.c
+@@ -54,7 +54,7 @@ extern const apr_pollset_provider_t *apr_pollset_provider_kqueue;
+ #if defined(HAVE_PORT_CREATE)
+ extern const apr_pollset_provider_t *apr_pollset_provider_port;
+ #endif
+-#if defined(HAVE_EPOLL)
++#if defined(HAVE_EPOLL) && ! defined (__MVS__)
+ extern const apr_pollset_provider_t *apr_pollset_provider_epoll;
+ #endif
+ #if defined(HAVE_AIO_MSGQ)
+@@ -80,7 +80,7 @@ static const apr_pollset_provider_t *pollset_provider(apr_pollset_method_e metho
+ #endif
+         break;
+         case APR_POLLSET_EPOLL:
+-#if defined(HAVE_EPOLL)
++#if defined(HAVE_EPOLL) && !defined(__MVS__)
+             provider = apr_pollset_provider_epoll;
+ #endif
+         break;

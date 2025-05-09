@@ -1,0 +1,22 @@
+diff --git a/poll/unix/pollcb.c b/poll/unix/pollcb.c
+index 1446696..be0de52 100644
+--- a/poll/unix/pollcb.c
++++ b/poll/unix/pollcb.c
+@@ -35,7 +35,7 @@ extern const apr_pollcb_provider_t *apr_pollcb_provider_kqueue;
+ #if defined(HAVE_PORT_CREATE)
+ extern const apr_pollcb_provider_t *apr_pollcb_provider_port;
+ #endif
+-#if defined(HAVE_EPOLL)
++#if defined(HAVE_EPOLL) && !defined(__MVS__)
+ extern const apr_pollcb_provider_t *apr_pollcb_provider_epoll;
+ #endif
+ #if defined(HAVE_POLL)
+@@ -57,7 +57,7 @@ static const apr_pollcb_provider_t *pollcb_provider(apr_pollset_method_e method)
+ #endif
+         break;
+         case APR_POLLSET_EPOLL:
+-#if defined(HAVE_EPOLL)
++#if defined(HAVE_EPOLL) && !defined(__MVS__)
+             provider = apr_pollcb_provider_epoll;
+ #endif
+         break;

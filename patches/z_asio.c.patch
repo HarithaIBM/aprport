@@ -1,0 +1,35 @@
+diff --git a/poll/unix/z_asio.c b/poll/unix/z_asio.c
+index 0181dd3..aef4717 100644
+--- a/poll/unix/z_asio.c
++++ b/poll/unix/z_asio.c
+@@ -43,12 +43,12 @@
+ #include "apr_arch_poll_private.h"
+ 
+ #ifdef HAVE_AIO_MSGQ
+-
++#warning "dh HAVE_AIO_MSGQ"
+ #include <sys/msg.h>  	/* msgget etc   */
+ #include <time.h>     	/* timestruct   */
+ #include <poll.h>     	/* pollfd       */
+ #include <limits.h>     /* MAX_INT      */
+-
++#include <le/aio.h>
+ struct apr_pollset_private_t
+ {
+     int             msg_q;              /* IPC message queue. The z/OS kernel sends messages
+@@ -178,8 +178,15 @@ static int asyncio(struct aiocb *a)
+     int rv;
+ 
+ #ifdef _LP64
++#ifdef __MVS__
++//#define AIO(pid, return_code, reason_code) __bpx4aio(pid, return_code, reason_code)
++#define AIO __bpx4aio
++#else
++#warning "dh have BPX4AIO"
+ #define AIO BPX4AIO
++#endif
+ #else
++#warning "dh have BPX1AIO"
+ #define AIO BPX1AIO
+ #endif
+ 

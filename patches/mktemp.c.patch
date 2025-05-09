@@ -1,0 +1,17 @@
+diff --git a/file_io/unix/mktemp.c b/file_io/unix/mktemp.c
+index 1d5ede3..1608fe3 100644
+--- a/file_io/unix/mktemp.c
++++ b/file_io/unix/mktemp.c
+@@ -53,6 +53,12 @@
+ #include "apr_portable.h" /* for apr_os_file_put() */
+ #include "apr_arch_inherit.h"
+ 
++#ifdef __MVS__
++
++#warning "dh fcntl"
++#include <fcntl.h>
++#endif
++
+ #ifndef HAVE_MKSTEMP
+ 
+ #if defined(SVR4) || defined(WIN32) || defined(NETWARE)
